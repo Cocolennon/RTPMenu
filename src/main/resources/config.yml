@@ -1,0 +1,35 @@
+# The RTP menu's title. You can change the menu's texture with it and ItemsAdder
+menu-title: "<#45CC4B>RTP Menu"
+
+# Previous and next page items. Doesn't matter if you have 3 or less worlds. You can use ItemsAdder items by changing this to itemsadder-namespace:itemname (example: itemsadder-customitems:coolstick)
+previous-page-item: arrow
+next-page-item: arrow
+
+# Allows or denies teleporting inside towns or outposts, works only with Towny
+allow-rtp-in-towns: false
+allow-rtp-in-outposts: false
+
+# Allows or denies teleporting inside areas protected by GriefPrevention
+allow-rtp-in-griefprevention: false
+
+# List of worlds to display in the RTP menu. There are 3 worlds per page
+worlds:
+  world: # The world's name. It can be found in your server's files, or in Multiverse's worlds list
+    item: grass_block # You can use ItemsAdder items by changing this to itemsadder-namespace:itemname (example: itemsadder-customitems:coolstick)
+    name: "<#00C200>Overworld" # The item's display name. Doesn't matter if using an ItemsAdder item
+    max-x: 50000 # Maximum X coordinate, both positive and negative (50000 means you can be teleported both to X 50000 and -50000)
+    max-z: 50000 # Maximum Z coordinate, same explanation as above
+    blacklisted-blocks: [lava, water, magma_block] # List of blocks you can't be teleported on top of. Usually includes lava!
+  world_nether:
+    item: netherrack
+    name: "<#BD0000>Nether"
+    max-x: 15000
+    max-z: 15000
+    blacklisted-blocks: [water, magma_block]
+  world_the_end:
+    item: end_stone
+    name: "<#DB3BFF>The End"
+    max-x: 50000
+    max-z: 50000
+    blacklisted-blocks: [obsidian]
+

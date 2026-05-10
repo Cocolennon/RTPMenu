@@ -1,0 +1,17 @@
+name: RTPMenu
+description: Better, more advanced RTP menu for multiple worlds with a bunch of options
+version: 1.0.0
+author: Cocolennon
+api-version: 1.21
+main: me.cocolennon.rtpmenu.Main
+soft-depend: [Towny, GriefPrevention, ItemsAdder]
+commands:
+  rtp:
+    description: Open the RTP menu
+  rtpreload:
+    description: Reloads the configuration
+permissions:
+  rtpmenu.teleport:
+    description: Allows opening the menu
+  rtpmenu.reload:
+    description: Allows reloading the configuration
