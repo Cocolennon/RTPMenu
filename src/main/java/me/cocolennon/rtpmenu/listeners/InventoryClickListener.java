@@ -11,6 +11,7 @@ import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -23,6 +24,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Consumer;
 
 public class InventoryClickListener implements Listener {
     private final String RTP_MENU = "<#75FF7A>[<#45CC4B>RTP Menu<#75FF7A>] ";
@@ -47,24 +49,32 @@ public class InventoryClickListener implements Listener {
                 main.getLogger().warning("World " + buttonAction + " doesn't exist!");
                 return;
             }
-            Location location = generateRandomCoordinates(rtpWorld, world);
-            player.teleport(location);
-            player.sendMessage(miniMessage.deserialize(RTP_MENU + "<#26F525>Teleported to X: " + (int)location.getX() + " Y: " + (int)location.getY() + " Z: " + (int)location.getZ()));
+            generateRandomCoordinates(rtpWorld, world, location -> {
+                player.teleport(location);
+                player.sendMessage(miniMessage.deserialize(RTP_MENU + "<#26F525>Teleported to X: " + (int)location.getX() + " Y: " + (int)location.getY() + " Z: " + (int)location.getZ()));
+            });
         }
     }
 
-    private Location generateRandomCoordinates(RTPWorld rtpWorld, World world) {
+    private void generateRandomCoordinates(RTPWorld rtpWorld, World world, Consumer<Location> callback) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
-        Location location;
-        Material groundBlock;
-        do {
-            int x = random.nextInt(-rtpWorld.maxX, rtpWorld.maxX + 1);
-            int z = random.nextInt(-rtpWorld.maxZ, rtpWorld.maxZ + 1);
-            int y = world.getHighestBlockYAt(x, z);
-            location  = new Location(world, x + 0.5, y + 1, z + 0.5);
-            groundBlock = world.getBlockAt(x, y, z).getType();
-        } while (!isTeleportLocationValid(location, rtpWorld, groundBlock));
-        return location;
+        Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+            Location location = null;
+            while (location == null) {
+                int x = random.nextInt(-rtpWorld.maxX, rtpWorld.maxX + 1);
+                int z = random.nextInt(-rtpWorld.maxZ, rtpWorld.maxZ + 1);
+                location = tryValidate(x, z, rtpWorld, world);
+            }
+            Location finalLocation = location;
+            Bukkit.getScheduler().runTask(Main.getInstance(), () -> callback.accept(finalLocation));
+        });
+    }
+
+    private Location tryValidate(int x, int z, RTPWorld rtpWorld, World world) {
+        int y = world.getHighestBlockYAt(x, z);
+        Location location = new Location(world, x + 0.5, y + 1, z + 0.5);
+        Material groundBlock = world.getType(x, y, z);
+        return isTeleportLocationValid(location, rtpWorld, groundBlock) ? location : null;
     }
 
     private boolean isTeleportLocationValid(Location location, RTPWorld rtpWorld, Material groundBlock) {
