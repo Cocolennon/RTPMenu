@@ -20,6 +20,7 @@ public class Main extends JavaPlugin {
     }
 
     public void loadConfig() {
+        saveDefaultConfig();
         reloadConfig();
         this.config = new Config(this);
     }
