@@ -20,6 +20,7 @@ public class ItemUtil {
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();
         pdc.set(buttonAction, PersistentDataType.STRING, world.worldName);
+        if(!world.itemName.startsWith("itemsadder-")) itemMeta.displayName(miniMessage.deserialize(world.displayName));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }

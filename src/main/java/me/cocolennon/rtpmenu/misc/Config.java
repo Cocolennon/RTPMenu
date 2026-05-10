@@ -50,10 +50,11 @@ public final class Config {
             ConfigurationSection world = configWorlds.getConfigurationSection(worldName);
             if(world == null) continue;
             String itemName = world.getString("item");
+            String displayName = world.getString("name");
             List<String> blacklistedBlocksNames = world.getStringList("blacklisted-blocks");
             int maxX = world.getInt("max-x");
             int maxZ = world.getInt("max-z");
-            worlds.add(new RTPWorld(worldName, itemName, blacklistedBlocksNames, maxX, maxZ));
+            worlds.add(new RTPWorld(worldName, itemName, displayName, blacklistedBlocksNames, maxX, maxZ));
         }
         return worlds;
     }
