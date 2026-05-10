@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 public class RTPInventoryHolder implements InventoryHolder {
     Inventory inventory;
 
-    public RTPInventoryHolder(Main main) {
-        this.inventory = main.getServer().createInventory(this, 27, MiniMessage.miniMessage().deserialize(main.config().menuTitle));
+    public RTPInventoryHolder(Main main, String title) {
+        this.inventory = main.getServer().createInventory(this, 27, MiniMessage.miniMessage().deserialize(title));
     }
 
     public void setItem(int slot, ItemStack item) {

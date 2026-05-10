@@ -65,7 +65,7 @@ public final class Config {
         int pagesCount = this.worlds.size() / 3;
 
         for(int pageNumber = 0; pageNumber <= pagesCount; pageNumber++){
-            RTPInventoryHolder newPage = new RTPInventoryHolder(plugin);
+            RTPInventoryHolder newPage = new RTPInventoryHolder(plugin, this.menuTitle);
             List<RTPWorld> worldsInPage = new ArrayList<>();
             if(pageNumber == pagesCount) slotsToAssign = this.worlds.size() - worldCount;
             for(int i = 0; i < slotsToAssign; i++) {
