@@ -69,10 +69,9 @@ public class InventoryClickListener implements Listener {
 
     private boolean isTeleportLocationValid(Location location, RTPWorld rtpWorld, Material groundBlock) {
         if(rtpWorld.blacklistedBlocks.contains(groundBlock)) return false;
-        TownyAPI townyAPI = TownyAPI.getInstance();
         Config config = Main.getInstance().config();
         if(config.isTownyPresent) {
-            TownBlock townBlock = townyAPI.getTownBlock(location);
+            TownBlock townBlock = TownyAPI.getInstance().getTownBlock(location);
             if(townBlock != null) return townBlock.isOutpost() ? config.rtpInOutposts : config.rtpInTowns;
         }
         if(config.isGriefPreventionPresent) {
