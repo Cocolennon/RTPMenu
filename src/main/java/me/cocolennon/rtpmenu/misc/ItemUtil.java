@@ -2,6 +2,7 @@ package me.cocolennon.rtpmenu.misc;
 
 import dev.lone.itemsadder.api.CustomStack;
 import me.cocolennon.rtpmenu.Main;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -20,7 +21,7 @@ public class ItemUtil {
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();
         pdc.set(buttonAction, PersistentDataType.STRING, world.worldName);
-        if(!world.itemName.startsWith("itemsadder-")) itemMeta.displayName(miniMessage.deserialize(world.displayName));
+        if(!world.itemName.startsWith("itemsadder-")) itemMeta.displayName(miniMessage.deserialize(world.displayName).decoration(TextDecoration.ITALIC, false));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
@@ -30,7 +31,7 @@ public class ItemUtil {
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();
         pdc.set(buttonAction, PersistentDataType.STRING, String.valueOf(pageNumber));
-        if(!itemName.startsWith("itemsadder-")) itemMeta.displayName(miniMessage.deserialize("<#45CC4B>Previous Page"));
+        if(!itemName.startsWith("itemsadder-")) itemMeta.displayName(miniMessage.deserialize("<#45CC4B>Previous Page").decoration(TextDecoration.ITALIC, false));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
@@ -40,7 +41,7 @@ public class ItemUtil {
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();
         pdc.set(buttonAction, PersistentDataType.STRING, String.valueOf(pageNumber));
-        if(!itemName.startsWith("itemsadder-")) itemMeta.displayName(miniMessage.deserialize("<#45CC4B>Next Page"));
+        if(!itemName.startsWith("itemsadder-")) itemMeta.displayName(miniMessage.deserialize("<#45CC4B>Next Page").decoration(TextDecoration.ITALIC, false));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
