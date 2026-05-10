@@ -24,8 +24,7 @@ public class ItemUtil {
         return itemStack;
     }
 
-    public static ItemStack getPreviousPageItem(int pageNumber) {
-        String itemName = main.config().previousPageItem;
+    public static ItemStack getPreviousPageItem(int pageNumber, String itemName) {
         ItemStack itemStack = getBaseStack(itemName);
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();
@@ -35,8 +34,7 @@ public class ItemUtil {
         return itemStack;
     }
 
-    public static ItemStack getNextPageItem(int pageNumber) {
-        String itemName = main.config().nextPageItem;
+    public static ItemStack getNextPageItem(int pageNumber, String itemName) {
         ItemStack itemStack = getBaseStack(itemName);
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();

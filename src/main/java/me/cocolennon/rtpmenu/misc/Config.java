@@ -72,15 +72,14 @@ public final class Config {
                 worldsInPage.add(this.worlds.get(worldCount));
                 worldCount++;
             }
-            // finally: add localization/translations
             int menuSlot = slotsToAssign == 1 ? 13 : 11;
             for(RTPWorld world : worldsInPage) {
                 ItemStack worldItem = ItemUtil.getWorldItem(world);
                 newPage.setItem(menuSlot, worldItem);
                 menuSlot += slotsToAssign == 2 ? 4 : 2;
             }
-            if(pageNumber < pagesCount && this.worlds.size() > 3) newPage.setItem(23, ItemUtil.getNextPageItem(pageNumber + 1));
-            if(pageNumber > 0) newPage.setItem(21, ItemUtil.getPreviousPageItem(pageNumber - 1));
+            if(pageNumber < pagesCount && this.worlds.size() > 3) newPage.setItem(23, ItemUtil.getNextPageItem(pageNumber + 1, this.nextPageItem));
+            if(pageNumber > 0) newPage.setItem(21, ItemUtil.getPreviousPageItem(pageNumber - 1, this.previousPageItem));
             pages.add(newPage);
         }
         return pages;
