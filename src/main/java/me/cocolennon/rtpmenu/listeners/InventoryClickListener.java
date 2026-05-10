@@ -61,7 +61,7 @@ public class InventoryClickListener implements Listener {
             int x = random.nextInt(-rtpWorld.maxX, rtpWorld.maxX + 1);
             int z = random.nextInt(-rtpWorld.maxZ, rtpWorld.maxZ + 1);
             int y = world.getHighestBlockYAt(x, z);
-            location  = new Location(world, x, y, z);
+            location  = new Location(world, x + 0.5, y + 1, z + 0.5);
             groundBlock = world.getBlockAt(x, y, z).getType();
         } while (!isTeleportLocationValid(location, rtpWorld, groundBlock));
         return location;
