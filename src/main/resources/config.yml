@@ -32,4 +32,3 @@ worlds:
     max-x: 50000
     max-z: 50000
     blacklisted-blocks: [obsidian]
-
