@@ -13,7 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 public class ItemUtil {
     private final static Main main = Main.getInstance();
     private static final MiniMessage miniMessage = MiniMessage.miniMessage();
-    public static NamespacedKey buttonAction = new NamespacedKey("rtpmenu", "buttonAction");
+    public static NamespacedKey buttonAction = new NamespacedKey("rtpmenu", "button_action");
 
     public static ItemStack getWorldItem(RTPWorld world) {
         ItemStack itemStack = getBaseStack(world.itemName);
