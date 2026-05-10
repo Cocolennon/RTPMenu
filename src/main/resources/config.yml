@@ -19,13 +19,13 @@ worlds:
     name: "<#00C200>Overworld" # The item's display name. Doesn't matter if using an ItemsAdder item
     max-x: 50000 # Maximum X coordinate, both positive and negative (50000 means you can be teleported both to X 50000 and -50000)
     max-z: 50000 # Maximum Z coordinate, same explanation as above
-    blacklisted-blocks: [lava, water, magma_block] # List of blocks you can't be teleported on top of. Usually includes lava!
+    blacklisted-blocks: [lava, water, magma_block, fire, cactus, campfire] # List of blocks you can't be teleported on top of. Usually includes lava!
   world_nether:
     item: netherrack
     name: "<#BD0000>Nether"
     max-x: 15000
     max-z: 15000
-    blacklisted-blocks: [water, magma_block]
+    blacklisted-blocks: [lava, magma_block, fire, soul_fire, soul_campfire]
   world_the_end:
     item: end_stone
     name: "<#DB3BFF>The End"
