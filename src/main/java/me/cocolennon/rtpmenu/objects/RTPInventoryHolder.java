@@ -1,4 +1,4 @@
-package me.cocolennon.rtpmenu.misc;
+package me.cocolennon.rtpmenu.objects;
 
 import me.cocolennon.rtpmenu.Main;
 import net.kyori.adventure.text.minimessage.MiniMessage;

@@ -1,10 +1,10 @@
 package me.cocolennon.rtpmenu.listeners;
 
 import me.cocolennon.rtpmenu.Main;
-import me.cocolennon.rtpmenu.misc.ItemUtil;
-import me.cocolennon.rtpmenu.misc.RTPInventoryHolder;
-import me.cocolennon.rtpmenu.misc.RTPWorld;
-import me.cocolennon.rtpmenu.misc.TeleportUtil;
+import me.cocolennon.rtpmenu.util.ItemUtil;
+import me.cocolennon.rtpmenu.objects.RTPInventoryHolder;
+import me.cocolennon.rtpmenu.objects.RTPWorld;
+import me.cocolennon.rtpmenu.util.TeleportUtil;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.*;

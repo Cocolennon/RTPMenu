@@ -1,6 +1,8 @@
-package me.cocolennon.rtpmenu.misc;
+package me.cocolennon.rtpmenu;
 
-import me.cocolennon.rtpmenu.Main;
+import me.cocolennon.rtpmenu.util.ItemUtil;
+import me.cocolennon.rtpmenu.objects.RTPInventoryHolder;
+import me.cocolennon.rtpmenu.objects.RTPWorld;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;

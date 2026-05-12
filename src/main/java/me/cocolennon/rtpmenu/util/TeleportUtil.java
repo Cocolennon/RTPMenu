@@ -1,8 +1,10 @@
-package me.cocolennon.rtpmenu.misc;
+package me.cocolennon.rtpmenu.util;
 
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.TownBlock;
+import me.cocolennon.rtpmenu.Config;
 import me.cocolennon.rtpmenu.Main;
+import me.cocolennon.rtpmenu.objects.RTPWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.kyori.adventure.text.minimessage.MiniMessage;

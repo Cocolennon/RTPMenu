@@ -1,7 +1,8 @@
-package me.cocolennon.rtpmenu.misc;
+package me.cocolennon.rtpmenu.util;
 
 import dev.lone.itemsadder.api.CustomStack;
 import me.cocolennon.rtpmenu.Main;
+import me.cocolennon.rtpmenu.objects.RTPWorld;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;

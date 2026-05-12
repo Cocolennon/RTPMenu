@@ -3,7 +3,6 @@ package me.cocolennon.rtpmenu;
 import me.cocolennon.rtpmenu.commands.RTPCommand;
 import me.cocolennon.rtpmenu.commands.ReloadCommand;
 import me.cocolennon.rtpmenu.listeners.InventoryClickListener;
-import me.cocolennon.rtpmenu.misc.Config;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
