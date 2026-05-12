@@ -1,0 +1,19 @@
+# Editing this file allows you to change what the plugin says!
+# You can also create other language files to support more languages, following the same file name format my plugin and Minecraft does!
+# Some nodes have "%s" inside. Those are replaced by values provided by the plugin, don't forget to put them in translations too!
+
+prefix: "<#75FF7A>[<#45CC4B>RTP Menu<#75FF7A>]"
+error:
+  permission: "<#FF4545>You aren't allowed to do this!"
+  teleport: "<#FF4545>Something went wrong when teleporting to this world."
+reload: "<#26F525>Configuration reloaded!"
+menu:
+  previous-page: "<#45CC4B>Previous Page"
+  next-page: "<#45CC4B>Next Page"
+teleport:
+  countdown: "<#26F525>Teleporting in %s seconds"
+  teleported: "<#26F525>Teleported to X: %s Y: %s Z: %s"
+console:
+  world-does-not-exist: "World %s doesn't exist!"
+  material-not-block: "%s isn't a block!"
+  item-does-not-exist: "Item %s doesn't exist! Replacing with generic invisible barrier block."
