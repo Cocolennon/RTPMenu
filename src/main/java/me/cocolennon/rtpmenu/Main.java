@@ -22,7 +22,7 @@ public class Main extends JavaPlugin {
     public void loadConfig() {
         saveDefaultConfig();
         reloadConfig();
-        this.config = new Config(this);
+        config = new Config(this);
     }
 
     private void registerCommands() {
@@ -37,6 +37,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         instance = null;
+        config = null;
         getLogger().info("Plugin disabled");
     }
 
