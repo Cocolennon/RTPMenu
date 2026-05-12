@@ -7,6 +7,7 @@ import me.cocolennon.rtpmenu.Main;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -74,6 +75,7 @@ public class TeleportUtil {
 
     private static boolean isTeleportLocationValid(Location location, RTPWorld rtpWorld, Material groundBlock) {
         if(rtpWorld.blacklistedBlocks.contains(groundBlock)) return false;
+        if(location.getY() <= location.getWorld().getMinHeight()) return false;
         Config config = Main.getInstance().config();
         if(config.isTownyPresent) {
             TownBlock townBlock = TownyAPI.getInstance().getTownBlock(location);

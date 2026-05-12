@@ -34,4 +34,4 @@ worlds:
     name: "<#DB3BFF>The End"
     max-x: 50000
     max-z: 50000
-    blacklisted-blocks: [obsidian, air] # It is very important to always have "air" blacklisted for The End!
+    blacklisted-blocks: [obsidian]
