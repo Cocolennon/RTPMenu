@@ -9,7 +9,6 @@ import me.cocolennon.rtpmenu.misc.RTPInventoryHolder;
 import me.cocolennon.rtpmenu.misc.RTPWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.*;
@@ -64,9 +63,7 @@ public class InventoryClickListener implements Listener {
     private void startTeleport(Player player, RTPWorld rtpWorld, World world) {
         player.closeInventory();
         UUID uuid = player.getUniqueId();
-        generateRandomCoordinates(rtpWorld, world, location -> {
-            pendingTeleports.put(uuid, location);
-        });
+        generateRandomCoordinates(rtpWorld, world, location -> pendingTeleports.put(uuid, location));
         countdowns.put(uuid, 3);
         final AtomicInteger seconds = new AtomicInteger(3);
         scheduler.runTaskTimer(main, countdownTask -> {
