@@ -27,22 +27,22 @@ public class ItemUtil {
         return itemStack;
     }
 
-    public static ItemStack getPreviousPageItem(int pageNumber, String itemName) {
+    public static ItemStack getPreviousPageItem(String locale, int pageNumber, String itemName) {
         ItemStack itemStack = getBaseStack(itemName);
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();
         pdc.set(buttonAction, PersistentDataType.STRING, String.valueOf(pageNumber));
-        if(!itemName.startsWith("itemsadder-")) itemMeta.displayName(miniMessage.deserialize("<#45CC4B>Previous Page").decoration(TextDecoration.ITALIC, false));
+        if(!itemName.startsWith("itemsadder-")) itemMeta.displayName(Localization.get(locale, "menu.previous-page", false).decoration(TextDecoration.ITALIC, false));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
 
-    public static ItemStack getNextPageItem(int pageNumber, String itemName) {
+    public static ItemStack getNextPageItem(String locale, int pageNumber, String itemName) {
         ItemStack itemStack = getBaseStack(itemName);
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();
         pdc.set(buttonAction, PersistentDataType.STRING, String.valueOf(pageNumber));
-        if(!itemName.startsWith("itemsadder-")) itemMeta.displayName(miniMessage.deserialize("<#45CC4B>Next Page").decoration(TextDecoration.ITALIC, false));
+        if(!itemName.startsWith("itemsadder-")) itemMeta.displayName(Localization.get(locale, "menu.next-page", false).decoration(TextDecoration.ITALIC, false));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
@@ -51,14 +51,14 @@ public class ItemUtil {
         if(itemName.startsWith("itemsadder-")) {
             CustomStack customStack = CustomStack.getInstance(itemName.replace("itemsadder-", ""));
             if(customStack == null) {
-                main.getLogger().warning("Item " + itemName + " doesn't exist! Replacing with generic invisible barrier block.");
+                main.getLogger().warning(Localization.console("item-does-not-exist", itemName));
                 return new ItemStack(Material.BARRIER);
             }
             return customStack.getItemStack();
         }else{
             Material material = Material.matchMaterial(itemName);
             if(material == null) {
-                main.getLogger().warning("Item " + itemName + " doesn't exist! Replacing with generic invisible barrier block.");
+                main.getLogger().warning(Localization.console("item-does-not-exist", itemName));
                 return new ItemStack(Material.BARRIER);
             }
             return new ItemStack(material);

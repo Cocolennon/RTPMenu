@@ -1,6 +1,7 @@
 package me.cocolennon.rtpmenu.objects;
 
 import me.cocolennon.rtpmenu.Main;
+import me.cocolennon.rtpmenu.util.Localization;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public final class RTPWorld {
         for(String blockName : blacklistedBlocksNames) {
             Material material =  Material.matchMaterial(blockName.toUpperCase());
             if(material == null || !material.isBlock()) {
-                Main.getInstance().getLogger().warning(blockName + " isn't a block!");
+                Main.getInstance().getLogger().warning(Localization.console("material-not-block", blockName));
                 continue;
             }
             blacklistedBlocks.add(material);

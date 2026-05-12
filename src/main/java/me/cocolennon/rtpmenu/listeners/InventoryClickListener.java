@@ -4,8 +4,8 @@ import me.cocolennon.rtpmenu.Main;
 import me.cocolennon.rtpmenu.util.ItemUtil;
 import me.cocolennon.rtpmenu.objects.RTPInventoryHolder;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
+import me.cocolennon.rtpmenu.util.Localization;
 import me.cocolennon.rtpmenu.util.TeleportUtil;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -18,8 +18,6 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class InventoryClickListener implements Listener {
     final Main main = Main.getInstance();
-    final MiniMessage miniMessage = MiniMessage.miniMessage();
-    final String RTP_MENU = "<#75FF7A>[<#45CC4B>RTP Menu<#75FF7A>] ";
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -35,8 +33,8 @@ public class InventoryClickListener implements Listener {
             RTPWorld rtpWorld = main.config().getWorld(buttonAction);
             World world = main.getServer().getWorld(rtpWorld == null ? "RTPMenuWorldDoesNotExist" : rtpWorld.worldName);
             if(rtpWorld == null || world == null) {
-                player.sendMessage(miniMessage.deserialize(RTP_MENU + "<#FF4545>Something went wrong when teleporting to this world."));
-                main.getLogger().warning("World " + buttonAction + " doesn't exist!");
+                player.sendMessage(Localization.get(player, "error.teleport", true));
+                main.getLogger().warning(Localization.console("console.world-does-not-exist", buttonAction));
                 return;
             }
             TeleportUtil.startTeleport(player, rtpWorld, world);

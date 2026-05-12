@@ -7,7 +7,6 @@ import me.cocolennon.rtpmenu.Main;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -22,8 +21,6 @@ import java.util.function.Consumer;
 public class TeleportUtil {
     static Main main = Main.getInstance();
     static BukkitScheduler scheduler = main.getServer().getScheduler();
-    static MiniMessage miniMessage = MiniMessage.miniMessage();
-    static String RTP_MENU = "<#75FF7A>[<#45CC4B>RTP Menu<#75FF7A>] ";
 
     static final Map<UUID, Location> pendingTeleports = new HashMap<>();
     static final Map<UUID, Integer> countdowns = new HashMap<>();
@@ -39,8 +36,9 @@ public class TeleportUtil {
                 countdowns.remove(uuid);
                 countdownTask.cancel();
             }
+            int currentSeconds = seconds.get();
             if(seconds.getAndDecrement() > 0) {
-                player.sendActionBar(miniMessage.deserialize("<#26F525>Teleporting in " + seconds + " seconds..."));
+                player.sendActionBar(Localization.get(player, "teleport.countdown", false, currentSeconds));
                 player.playSound(player, Sound.BLOCK_NOTE_BLOCK_PLING, 1.5f, 2f);
                 return;
             }
@@ -54,7 +52,7 @@ public class TeleportUtil {
     private static void teleportPlayer(Player player, Location location) {
         player.teleport(location);
         player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1.5f, 2f);
-        player.sendMessage(miniMessage.deserialize(RTP_MENU + "<#26F525>Teleported to X: " + (int)location.getX() + " Y: " + (int)location.getY() + " Z: " + (int)location.getZ()));
+        player.sendMessage(Localization.get(player, "teleport.teleported", true, (int) location.getX(), (int) location.getY(), (int) location.getZ()));
     }
 
     private static void generateRandomCoordinates(RTPWorld rtpWorld, World world, Consumer<Location> callback) {

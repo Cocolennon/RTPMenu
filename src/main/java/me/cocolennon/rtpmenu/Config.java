@@ -3,6 +3,7 @@ package me.cocolennon.rtpmenu;
 import me.cocolennon.rtpmenu.util.ItemUtil;
 import me.cocolennon.rtpmenu.objects.RTPInventoryHolder;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
+import me.cocolennon.rtpmenu.util.Localization;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -12,6 +13,7 @@ import java.util.*;
 
 public final class Config {
     public final String menuTitle;
+    public final String defaultLocale;
     public final String previousPageItem;
     public final String nextPageItem;
     public final boolean rtpInTowns;
@@ -28,6 +30,8 @@ public final class Config {
     public Config(Main plugin) {
         FileConfiguration config = plugin.getConfig();
         PluginManager pluginManager = plugin.getServer().getPluginManager();
+        this.defaultLocale = config.getString("default-locale");
+        Localization.init(plugin, defaultLocale);
         this.menuTitle = config.getString("menu-title");
         this.previousPageItem = config.getString("previous-page-item");
         this.nextPageItem = config.getString("next-page-item");
@@ -81,8 +85,8 @@ public final class Config {
                 newPage.setItem(menuSlot, worldItem);
                 menuSlot += slotsToAssign == 2 ? 4 : 2;
             }
-            if(pageNumber < pagesCount && this.worlds.size() > 3) newPage.setItem(23, ItemUtil.getNextPageItem(pageNumber + 1, this.nextPageItem));
-            if(pageNumber > 0) newPage.setItem(21, ItemUtil.getPreviousPageItem(pageNumber - 1, this.previousPageItem));
+            if(pageNumber < pagesCount && this.worlds.size() > 3) newPage.setItem(23, ItemUtil.getNextPageItem(defaultLocale, pageNumber + 1, this.nextPageItem));
+            if(pageNumber > 0) newPage.setItem(21, ItemUtil.getPreviousPageItem(defaultLocale, pageNumber - 1, this.previousPageItem));
             pages.add(newPage);
         }
         return pages;

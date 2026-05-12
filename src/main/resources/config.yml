@@ -1,3 +1,6 @@
+# This will be used for errors in the console and as a fallback when a user's language isn't on the server.
+default-locale: "en-US"
+
 # The RTP menu's title. You can change the menu's texture with it and ItemsAdder
 menu-title: "<#45CC4B>RTP Menu"
 
@@ -31,4 +34,4 @@ worlds:
     name: "<#DB3BFF>The End"
     max-x: 50000
     max-z: 50000
-    blacklisted-blocks: [obsidian]
+    blacklisted-blocks: [obsidian, air]
