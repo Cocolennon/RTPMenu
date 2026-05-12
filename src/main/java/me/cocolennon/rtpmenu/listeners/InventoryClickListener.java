@@ -9,12 +9,10 @@ import me.cocolennon.rtpmenu.misc.RTPInventoryHolder;
 import me.cocolennon.rtpmenu.misc.RTPWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.lang3.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,12 +20,23 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 public class InventoryClickListener implements Listener {
-    private final String RTP_MENU = "<#75FF7A>[<#45CC4B>RTP Menu<#75FF7A>] ";
+    final Main main = Main.getInstance();
+    final BukkitScheduler scheduler = main.getServer().getScheduler();
+    final MiniMessage miniMessage = MiniMessage.miniMessage();
+    final String RTP_MENU = "<#75FF7A>[<#45CC4B>RTP Menu<#75FF7A>] ";
+
+    final Map<UUID, Location> pendingTeleports = new HashMap<>();
+    final Map<UUID, Integer> countdowns = new HashMap<>();
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -38,10 +47,8 @@ public class InventoryClickListener implements Listener {
         PersistentDataContainer pdc = clicked.getItemMeta().getPersistentDataContainer();
         if(!pdc.has(ItemUtil.buttonAction)) return;
         String buttonAction = pdc.get(ItemUtil.buttonAction, PersistentDataType.STRING);
-        Main main = Main.getInstance();
         if(StringUtils.isNumeric(buttonAction)) player.openInventory(main.config().pages.get(Integer.parseInt(buttonAction)).getInventory());
         else {
-            MiniMessage miniMessage = MiniMessage.miniMessage();
             RTPWorld rtpWorld = main.config().getWorld(buttonAction);
             World world = main.getServer().getWorld(rtpWorld == null ? "RTPMenuWorldDoesNotExist" : rtpWorld.worldName);
             if(rtpWorld == null || world == null) {
@@ -49,16 +56,40 @@ public class InventoryClickListener implements Listener {
                 main.getLogger().warning("World " + buttonAction + " doesn't exist!");
                 return;
             }
-            generateRandomCoordinates(rtpWorld, world, location -> {
-                player.teleport(location);
-                player.sendMessage(miniMessage.deserialize(RTP_MENU + "<#26F525>Teleported to X: " + (int)location.getX() + " Y: " + (int)location.getY() + " Z: " + (int)location.getZ()));
-            });
+            startTeleport(player, rtpWorld, world);
         }
+        event.setCancelled(true);
+    }
+
+    private void startTeleport(Player player, RTPWorld rtpWorld, World world) {
+        player.closeInventory();
+        UUID uuid = player.getUniqueId();
+        generateRandomCoordinates(rtpWorld, world, location -> {
+            pendingTeleports.put(uuid, location);
+        });
+        countdowns.put(uuid, 3);
+        final AtomicInteger seconds = new AtomicInteger(3);
+        scheduler.runTaskTimer(main, countdownTask -> {
+            if(!player.isOnline()) {
+                pendingTeleports.remove(uuid);
+                countdowns.remove(uuid);
+                countdownTask.cancel();
+            }
+            if(seconds.getAndDecrement() > 0) {
+                player.sendActionBar(miniMessage.deserialize("<#26F525>Teleporting in " + seconds + " seconds..."));
+                player.playSound(player, Sound.BLOCK_NOTE_BLOCK_PLING, 1.5f, 2f);
+                return;
+            }
+            countdowns.remove(uuid);
+            Location location = pendingTeleports.remove(uuid);
+            if(location != null && !countdowns.containsKey(uuid)) teleportPlayer(player, location);
+            countdownTask.cancel();
+        }, 0L, 20L);
     }
 
     private void generateRandomCoordinates(RTPWorld rtpWorld, World world, Consumer<Location> callback) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
-        Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
+        scheduler.runTaskAsynchronously(Main.getInstance(), () -> {
             Location location = null;
             while (location == null) {
                 int x = random.nextInt(-rtpWorld.maxX, rtpWorld.maxX + 1);
@@ -66,8 +97,14 @@ public class InventoryClickListener implements Listener {
                 location = tryValidate(x, z, rtpWorld, world);
             }
             Location finalLocation = location;
-            Bukkit.getScheduler().runTask(Main.getInstance(), () -> callback.accept(finalLocation));
+            scheduler.runTask(Main.getInstance(), () -> callback.accept(finalLocation));
         });
+    }
+
+    private void teleportPlayer(Player player, Location location) {
+        player.teleport(location);
+        player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1.5f, 2f);
+        player.sendMessage(miniMessage.deserialize(RTP_MENU + "<#26F525>Teleported to X: " + (int)location.getX() + " Y: " + (int)location.getY() + " Z: " + (int)location.getZ()));
     }
 
     private Location tryValidate(int x, int z, RTPWorld rtpWorld, World world) {
