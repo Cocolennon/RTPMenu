@@ -7,7 +7,6 @@ import me.cocolennon.rtpmenu.Main;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -60,6 +59,7 @@ public class TeleportUtil {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         scheduler.runTaskAsynchronously(Main.getInstance(), () -> {
             Location location = null;
+            int coordinatesGenerated = 0;
             while (location == null) {
                 int x = random.nextInt(-rtpWorld.maxX, rtpWorld.maxX + 1);
                 int z = random.nextInt(-rtpWorld.maxZ, rtpWorld.maxZ + 1);
@@ -67,6 +67,8 @@ public class TeleportUtil {
                 Material groundBlock = world.getType(x, y, z);
                 Location tempLocation = new Location(world, x, y, z);
                 location = isTeleportLocationValid(tempLocation, rtpWorld, groundBlock) ? new Location(world, x + 0.5, y + 1, z + 0.5) : null;
+                if(coordinatesGenerated >= 10) location = world.getSpawnLocation();
+                coordinatesGenerated++;
             }
             Location finalLocation = location;
             scheduler.runTask(Main.getInstance(), () -> callback.accept(finalLocation));
