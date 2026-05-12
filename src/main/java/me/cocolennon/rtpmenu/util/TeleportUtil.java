@@ -64,7 +64,8 @@ public class TeleportUtil {
                 int z = random.nextInt(-rtpWorld.maxZ, rtpWorld.maxZ + 1);
                 int y = world.getHighestBlockYAt(x, z);
                 Material groundBlock = world.getType(x, y, z);
-                location = isTeleportLocationValid(location, rtpWorld, groundBlock) ? new Location(world, x + 0.5, y + 1, z + 0.5) : null;
+                Location tempLocation = new Location(world, x, y, z);
+                location = isTeleportLocationValid(tempLocation, rtpWorld, groundBlock) ? new Location(world, x + 0.5, y + 1, z + 0.5) : null;
             }
             Location finalLocation = location;
             scheduler.runTask(Main.getInstance(), () -> callback.accept(finalLocation));
