@@ -1,0 +1,19 @@
+# Modifier ce fichier vous permettra de changer ce que le plugin dit !
+# Vous pouvez aussi créer d'autres fichiers de langue pour prendre en charge plus de langues en suivant le même format de nom que mon plugin et Minecraft
+# Certains noeuds ont "%s" dans le texte. Ils sont remplacés par des valeurs fournies par le plugin, ne les oubliez pas dans les traductions !
+
+prefix: "<#75FF7A>[<#45CC4B>RTP Menu<#75FF7A>]"
+error:
+  permission: "<#FF4545>Vous ne pouvez pas faire ça !"
+  teleport: "<#FF4545>Un problème est survenu lors de la téléportation vers ce monde !"
+reload: "<#26F525>Configuration rechargée !"
+menu:
+  previous-page: "<#45CC4B>Page précédente"
+  next-page: "<#45CC4B>Page suivante"
+teleport:
+  countdown: "<#26F525>Téléportation dans %s secondes"
+  teleported: "<#26F525>Vous avez été téléporté.e en X: %s Y: %s Z: %s"
+console:
+  world-does-not-exist: "Le monde %s n'existe pas !"
+  material-not-block: "%s n'est pas un bloc !"
+  item-does-not-exist: "L'item %s n'existe pas ! Remplacement par une barrière invisible générique."
