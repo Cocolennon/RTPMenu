@@ -33,6 +33,7 @@ public final class Localization {
     }
 
     private static void loadLocales(File folder) {
+        locales.clear();
         File[] files = folder.listFiles();
         if(files == null) return;
 
