@@ -11,7 +11,7 @@ menu:
   previous-page: "<#45CC4B>Previous Page"
   next-page: "<#45CC4B>Next Page"
 teleport:
-  countdown: "<#26F525>Teleporting in %s seconds"
+  countdown: "<#26F525>Teleporting in %s seconds" # Laissez ce champ vide si vous voulez désactiver l'affichage du décompte dans la barre d'action
   teleported: "<#26F525>Teleported to X: %s Y: %s Z: %s"
 console:
   world-does-not-exist: "World %s doesn't exist!"

@@ -11,7 +11,7 @@ menu:
   previous-page: "<#45CC4B>Page précédente"
   next-page: "<#45CC4B>Page suivante"
 teleport:
-  countdown: "<#26F525>Téléportation dans %s secondes"
+  countdown: "<#26F525>Téléportation dans %s secondes" #
   teleported: "<#26F525>Vous avez été téléporté.e en X: %s Y: %s Z: %s"
 console:
   world-does-not-exist: "Le monde %s n'existe pas !"
