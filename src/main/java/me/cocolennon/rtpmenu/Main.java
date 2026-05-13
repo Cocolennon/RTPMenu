@@ -3,6 +3,7 @@ package me.cocolennon.rtpmenu;
 import me.cocolennon.rtpmenu.commands.RTPCommand;
 import me.cocolennon.rtpmenu.commands.ReloadCommand;
 import me.cocolennon.rtpmenu.listeners.InventoryClickListener;
+import me.cocolennon.rtpmenu.util.MetricsUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -15,6 +16,7 @@ public class Main extends JavaPlugin {
         loadConfig();
         registerCommands();
         registerListeners();
+        MetricsUtil.register(instance);
         getLogger().info("Plugin enabled");
     }
 

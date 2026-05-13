@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id "com.gradleup.shadow" version "9.0.0-rc2"
+    id "com.gradleup.shadow" version "9.4.1"
 }
 
 group = 'com.cocolennon'
@@ -39,6 +39,7 @@ dependencies {
     compileOnly 'com.palmergames.bukkit.towny:towny:0.103.0.0'
     compileOnly 'com.github.GriefPrevention:GriefPrevention:18.0.0'
     compileOnly 'dev.lone:api-itemsadder:4.0.10'
+    implementation 'org.bstats:bstats-bukkit:3.2.1'
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -47,6 +48,7 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.shadowJar {
+    relocate 'org.bstats', 'me.cocolennon.bstats'
     archiveFileName = "RTPMenu-${version}.jar"
     destinationDirectory = file('./builds')
 }

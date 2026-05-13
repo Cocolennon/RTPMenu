@@ -53,6 +53,7 @@ public class TeleportUtil {
         player.teleport(location);
         player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1.5f, 2f);
         player.sendMessage(Localization.get(player, "teleport.teleported", true, (int) location.getX(), (int) location.getY(), (int) location.getZ()));
+        MetricsUtil.rtpCounter.incrementAndGet();
     }
 
     private static void generateRandomCoordinates(RTPWorld rtpWorld, World world, Consumer<Location> callback) {
