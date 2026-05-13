@@ -63,7 +63,7 @@ public class TeleportUtil {
             while (location == null) {
                 int x = random.nextInt(-rtpWorld.maxX, rtpWorld.maxX + 1);
                 int z = random.nextInt(-rtpWorld.maxZ, rtpWorld.maxZ + 1);
-                int y = world.getHighestBlockYAt(x, z);
+                int y = world.getEnvironment() == World.Environment.NETHER ? getNetherY(world, x, z) : world.getHighestBlockYAt(x, z);
                 Material groundBlock = world.getType(x, y, z);
                 Location tempLocation = new Location(world, x, y, z);
                 location = isTeleportLocationValid(tempLocation, rtpWorld, groundBlock) ? new Location(world, x + 0.5, y + 1, z + 0.5) : null;
@@ -73,6 +73,18 @@ public class TeleportUtil {
             Location finalLocation = location;
             scheduler.runTask(Main.getInstance(), () -> callback.accept(finalLocation));
         });
+    }
+
+    private static int getNetherY(World world, int x, int z) {
+        for(int y = 120; y > world.getMinHeight(); y--) {
+            Material ground = world.getType(x, y, z);
+            Material feet = world.getType(x, y + 1, z);
+            Material head = world.getType(x, y + 2, z);
+            if(ground.isAir()) continue;
+            if(!feet.isAir() || !head.isAir()) continue;
+            return y;
+        }
+        return world.getMinHeight();
     }
 
     private static boolean isTeleportLocationValid(Location location, RTPWorld rtpWorld, Material groundBlock) {
