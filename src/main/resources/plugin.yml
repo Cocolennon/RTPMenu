@@ -4,7 +4,7 @@ version: 1.0.0
 author: Cocolennon
 api-version: 1.21
 main: me.cocolennon.rtpmenu.Main
-soft-depend: [Towny, GriefPrevention, ItemsAdder]
+softdepend: [Towny, GriefPrevention, ItemsAdder]
 commands:
   rtp:
     description: Open the RTP menu
