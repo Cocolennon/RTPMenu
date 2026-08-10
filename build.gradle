@@ -37,6 +37,7 @@ repositories {
 dependencies {
     compileOnly 'io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT'
     compileOnly 'com.palmergames.bukkit.towny:towny:0.103.0.0'
+    compileOnly 'net.luckperms:api:5.5'
     compileOnly 'com.github.GriefPrevention:GriefPrevention:18.0.0'
     compileOnly 'dev.lone:api-itemsadder:4.0.10'
     implementation 'org.bstats:bstats-bukkit:3.2.1'
