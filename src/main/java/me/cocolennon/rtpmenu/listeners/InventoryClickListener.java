@@ -22,6 +22,7 @@ public class InventoryClickListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if(!(event.getInventory().getHolder() instanceof RTPInventoryHolder)) return;
+        event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
         ItemStack clicked = event.getCurrentItem();
         if(clicked == null || !clicked.hasItemMeta()) return;
@@ -40,6 +41,5 @@ public class InventoryClickListener implements Listener {
             TeleportUtil.startTeleport(player, rtpWorld, world);
             player.closeInventory();
         }
-        event.setCancelled(true);
     }
 }
