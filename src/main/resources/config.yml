@@ -4,7 +4,7 @@ default-locale: "en-US"
 # The RTP menu's title. You can change the menu's texture with it and ItemsAdder
 menu-title: "<#45CC4B>RTP Menu"
 
-# Previous and next page items. Doesn't matter if you have 3 or less worlds. You can use ItemsAdder items by changing this to itemsadder-namespace:itemname (example: itemsadder-customitems:coolstick)
+# Previous and next page items. Doesn't matter if you have 3 or fewer worlds. You can use ItemsAdder items by changing this to itemsadder-namespace:itemname (example: itemsadder-customitems:coolstick)
 previous-page-item: arrow
 next-page-item: arrow
 
