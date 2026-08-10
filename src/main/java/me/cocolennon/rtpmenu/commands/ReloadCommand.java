@@ -16,7 +16,7 @@ public class ReloadCommand implements CommandExecutor {
             sender.sendMessage(Localization.get(player, "error.permission", true));
             return false;
         }
-        Main.getInstance().loadConfig();
+        Main.getInstance().loadConfig(true);
         sender.sendMessage(Localization.get(player, "reload", true));
         return true;
     }

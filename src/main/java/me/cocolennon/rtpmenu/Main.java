@@ -13,15 +13,19 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        loadConfig();
+        loadConfig(false);
         registerCommands();
         registerListeners();
         MetricsUtil.register(instance);
         getLogger().info("Plugin enabled");
     }
 
-    public void loadConfig() {
-        saveDefaultConfig();
+    public void loadConfig(boolean reload) {
+        if(!reload) {
+            saveDefaultConfig();
+            getConfig().options().copyDefaults(true);
+            saveConfig();
+        }
         reloadConfig();
         config = new Config(this);
     }
