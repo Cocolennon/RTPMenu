@@ -6,6 +6,10 @@ prefix: "<#75FF7A>[<#45CC4B>RTP Menu<#75FF7A>]"
 error:
   permission: "<#FF4545>Vous ne pouvez pas faire ça !"
   teleport: "<#FF4545>Un problème est survenu lors de la téléportation vers ce monde !"
+  cooldown:
+    hours: "<#FF4545>Vous devez attendre %s heures %s minutes avant de vous téleporter à nouveau."
+    minutes: "<#FF4545>Vous devez attendre %s minutes %s secondes avant de vous téleporter à nouveau."
+    seconds: "<#FF4545>Vous devez attendre %s secondes avant de vous téleporter à nouveau."
 reload: "<#26F525>Configuration rechargée !"
 menu:
   previous-page: "<#45CC4B>Page précédente"

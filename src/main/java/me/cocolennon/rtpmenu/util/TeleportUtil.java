@@ -24,6 +24,26 @@ public class TeleportUtil {
 
     static final Map<UUID, Location> pendingTeleports = new HashMap<>();
     static final Map<UUID, Integer> countdowns = new HashMap<>();
+    static final Map<UUID, Long> cooldowns = new HashMap<>();
+
+    public static boolean isOnCooldown(Player player) {
+        Long expiresAt = cooldowns.get(player.getUniqueId());
+        if(expiresAt == null) return false;
+        if(System.currentTimeMillis() < expiresAt) return true;
+        cooldowns.remove(player.getUniqueId());
+        return false;
+    }
+
+    public static Long getRemainingCooldown(Player player) {
+        Long expiresAt = cooldowns.get(player.getUniqueId());
+        if(expiresAt == null) return 0L;
+        long remaining = expiresAt - System.currentTimeMillis();
+        return remaining / 1000L;
+    }
+
+    private static void setCooldown(Player player) {
+        cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + (main.config().rtpCooldown * 1000L));
+    }
 
     public static void startTeleport(Player player, RTPWorld rtpWorld, World world) {
         UUID uuid = player.getUniqueId();
@@ -53,6 +73,7 @@ public class TeleportUtil {
         player.teleport(location);
         player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1.5f, 2f);
         player.sendMessage(Localization.get(player, "teleport.teleported", true, (int) location.getX(), (int) location.getY(), (int) location.getZ()));
+        setCooldown(player);
         MetricsUtil.rtpCounter.incrementAndGet();
     }
 

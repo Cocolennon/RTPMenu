@@ -15,6 +15,9 @@ allow-rtp-in-outposts: false
 # Allows or denies teleporting inside areas protected by GriefPrevention
 allow-rtp-in-griefprevention: false
 
+# Cooldown between RTP usages. Default is 10 seconds.
+rtp-cooldown: 10
+
 # List of worlds to display in the RTP menu. There are 3 worlds per page
 worlds:
   world: # The world's name. It can be found in your server's files, or in Multiverse's worlds list
