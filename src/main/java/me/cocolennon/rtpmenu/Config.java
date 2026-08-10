@@ -21,6 +21,7 @@ public final class Config {
     public final boolean rtpInGriefPrevention;
     public final List<RTPWorld> worlds;
 
+    public final boolean isLuckPermsPresent;
     public final boolean isTownyPresent;
     public final boolean isGriefPreventionPresent;
     public final boolean isItemsAdderPresent;
@@ -39,6 +40,7 @@ public final class Config {
         this.rtpInOutposts = config.getBoolean("allow-rtp-in-outposts");
         this.rtpInGriefPrevention = config.getBoolean("allow-rtp-in-griefprevention");
         this.worlds = loadWorlds(config.getConfigurationSection("worlds"));
+        this.isLuckPermsPresent = pluginManager.isPluginEnabled("LuckPerms");
         this.isTownyPresent = pluginManager.isPluginEnabled("Towny");
         this.isGriefPreventionPresent = pluginManager.isPluginEnabled("GriefPrevention");
         this.isItemsAdderPresent = pluginManager.isPluginEnabled("ItemsAdder");
