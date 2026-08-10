@@ -7,6 +7,10 @@ import me.cocolennon.rtpmenu.Main;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.group.Group;
+import net.luckperms.api.model.user.User;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -42,7 +46,18 @@ public class TeleportUtil {
     }
 
     private static void setCooldown(Player player) {
-        cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + (main.config().rtpCooldown * 1000L));
+        Config config = main.config();
+        long cooldown = main.config().rtpCooldown;
+        if(config.isLuckPermsPresent) {
+            LuckPerms luckPerms = LuckPermsProvider.get();
+            User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
+            Group group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup());
+            if(group != null) {
+                String cooldownMeta = group.getCachedData().getMetaData().getMetaValue("rtpmenu.cooldown");
+                if(cooldownMeta != null) cooldown = Long.parseLong(cooldownMeta);
+            }
+        }
+        cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + (cooldown * 1000L));
     }
 
     public static void startTeleport(Player player, RTPWorld rtpWorld, World world) {
