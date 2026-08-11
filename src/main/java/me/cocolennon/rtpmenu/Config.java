@@ -20,6 +20,7 @@ public final class Config {
     public final boolean rtpInOutposts;
     public final boolean rtpInGriefPrevention;
     public final int rtpCooldown;
+    public final boolean perWorldCooldowns;
     public final List<RTPWorld> worlds;
 
     public final boolean isLuckPermsPresent;
@@ -41,6 +42,7 @@ public final class Config {
         this.rtpInOutposts = config.getBoolean("allow-rtp-in-outposts");
         this.rtpInGriefPrevention = config.getBoolean("allow-rtp-in-griefprevention");
         this.rtpCooldown = config.getInt("rtp-cooldown");
+        this.perWorldCooldowns = config.getBoolean("per-world-cooldowns");
         this.worlds = loadWorlds(config.getConfigurationSection("worlds"));
         this.isLuckPermsPresent = pluginManager.isPluginEnabled("LuckPerms");
         this.isTownyPresent = pluginManager.isPluginEnabled("Towny");

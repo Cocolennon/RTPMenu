@@ -17,6 +17,8 @@ allow-rtp-in-griefprevention: false
 
 # Cooldown between RTP usages. Default is 10 seconds.
 rtp-cooldown: 10
+# Allows having separate cooldowns for every world.
+per-world-cooldowns: true
 
 # List of worlds to display in the RTP menu. There are 3 worlds per page
 worlds:
