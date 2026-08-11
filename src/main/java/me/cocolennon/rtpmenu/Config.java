@@ -14,6 +14,10 @@ import java.io.File;
 import java.util.*;
 
 public final class Config {
+    private final Main plugin;
+    private final FileConfiguration config;
+    private final YamlConfiguration worldsConfig;
+
     public final String menuTitle;
     public final String defaultLocale;
     public final String previousPageItem;
@@ -33,7 +37,9 @@ public final class Config {
     public final List<RTPInventoryHolder> pages;
 
     public Config(Main plugin) {
-        FileConfiguration config = plugin.getConfig();
+        this.plugin = plugin;
+        this.config = plugin.getConfig();
+        this.worldsConfig = loadWorldsConfig();
         PluginManager pluginManager = plugin.getServer().getPluginManager();
         this.defaultLocale = config.getString("default-locale");
         Localization.init(plugin, defaultLocale);
@@ -45,20 +51,45 @@ public final class Config {
         this.rtpInGriefPrevention = config.getBoolean("allow-rtp-in-griefprevention");
         this.rtpCooldown = config.getInt("rtp-cooldown");
         this.perWorldCooldowns = config.getBoolean("per-world-cooldowns");
-        this.worlds = loadWorlds(plugin);
+        this.worlds = loadWorlds();
         this.isLuckPermsPresent = pluginManager.isPluginEnabled("LuckPerms");
         this.isTownyPresent = pluginManager.isPluginEnabled("Towny");
         this.isGriefPreventionPresent = pluginManager.isPluginEnabled("GriefPrevention");
         this.isItemsAdderPresent = pluginManager.isPluginEnabled("ItemsAdder");
-        this.pages = getPages(plugin);
+        this.pages = getPages();
     }
 
     public RTPWorld getWorld(String worldName) {
         return worlds.stream().filter(world -> world.worldName.equalsIgnoreCase(worldName)).findFirst().orElse(null);
     }
 
-    private List<RTPWorld> loadWorlds(Main plugin) {
-        ConfigurationSection configWorlds = loadWorldsConfig(plugin);
+    private YamlConfiguration loadWorldsConfig() {
+        File worldsFile = new File(plugin.getDataFolder(), "worlds.yml");
+        if(!worldsFile.exists()) {
+            plugin.saveResource("worlds.yml", false);
+            worldsFile = new File(plugin.getDataFolder(), "worlds.yml");
+        }
+        YamlConfiguration worldsConfig = YamlConfiguration.loadConfiguration(worldsFile);
+        migrateWorldsConfig(worldsFile, worldsConfig);
+        return worldsConfig;
+    }
+
+    private void migrateWorldsConfig(File worldsFile, YamlConfiguration worldsConfig) {
+        ConfigurationSection oldWorldsSection = config.getConfigurationSection("worlds");
+        if(oldWorldsSection == null) return;
+        try {
+            worldsConfig.set("worlds", oldWorldsSection);
+            worldsConfig.save(worldsFile);
+            config.set("worlds", null);
+            plugin.saveConfig();
+            plugin.getLogger().info("Migrated " + oldWorldsSection.getKeys(false).size() + " world(s) from config.yml to worlds.yml");
+        }catch(Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private List<RTPWorld> loadWorlds() {
+        ConfigurationSection configWorlds = worldsConfig.getConfigurationSection("worlds");
         if(configWorlds == null) return List.of();
         List<RTPWorld> worlds = new ArrayList<>();
         for(String worldName : configWorlds.getKeys(false)) {
@@ -74,17 +105,7 @@ public final class Config {
         return worlds;
     }
 
-    private ConfigurationSection loadWorldsConfig(Main plugin) {
-        File worldsFile = new File(plugin.getDataFolder(), "worlds.yml");
-        if(!worldsFile.exists()) {
-            plugin.saveResource("worlds.yml", false);
-            worldsFile = new File(plugin.getDataFolder(), "worlds.yml");
-        }
-        YamlConfiguration worldsConfig = YamlConfiguration.loadConfiguration(worldsFile);
-        return worldsConfig.getConfigurationSection("worlds");
-    }
-
-    private List<RTPInventoryHolder> getPages(Main plugin) {
+    private List<RTPInventoryHolder> getPages() {
         List<RTPInventoryHolder> pages = new ArrayList<>();
         int worldCount = 0;
         int slotsToAssign = 3;
