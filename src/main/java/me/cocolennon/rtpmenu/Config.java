@@ -1,5 +1,6 @@
 package me.cocolennon.rtpmenu;
 
+import me.cocolennon.rtpmenu.objects.SoftDependencies;
 import me.cocolennon.rtpmenu.util.ItemUtil;
 import me.cocolennon.rtpmenu.objects.RTPInventoryHolder;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
@@ -28,12 +29,7 @@ public final class Config {
     public final int rtpCooldown;
     public final boolean perWorldCooldowns;
     public final List<RTPWorld> worlds;
-
-    public final boolean isLuckPermsPresent;
-    public final boolean isTownyPresent;
-    public final boolean isGriefPreventionPresent;
-    public final boolean isItemsAdderPresent;
-
+    public final SoftDependencies softDependencies;
     public final List<RTPInventoryHolder> pages;
 
     public Config(Main plugin) {
@@ -52,10 +48,7 @@ public final class Config {
         this.rtpCooldown = config.getInt("rtp-cooldown");
         this.perWorldCooldowns = config.getBoolean("per-world-cooldowns");
         this.worlds = loadWorlds();
-        this.isLuckPermsPresent = pluginManager.isPluginEnabled("LuckPerms");
-        this.isTownyPresent = pluginManager.isPluginEnabled("Towny");
-        this.isGriefPreventionPresent = pluginManager.isPluginEnabled("GriefPrevention");
-        this.isItemsAdderPresent = pluginManager.isPluginEnabled("ItemsAdder");
+        this.softDependencies = new SoftDependencies(pluginManager);
         this.pages = getPages();
     }
 

@@ -52,7 +52,7 @@ public class TeleportUtil {
     private static void setCooldown(Player player, String worldName) {
         Config config = main.config();
         long cooldown = main.config().rtpCooldown;
-        if(config.isLuckPermsPresent) {
+        if(config.softDependencies.isLuckPermsPresent) {
             LuckPerms luckPerms = LuckPermsProvider.get();
             User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             Group group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup());
@@ -133,11 +133,11 @@ public class TeleportUtil {
         if(rtpWorld.blacklistedBlocks.contains(groundBlock)) return false;
         if(location.getY() <= location.getWorld().getMinHeight()) return false;
         Config config = Main.getInstance().config();
-        if(config.isTownyPresent) {
+        if(config.softDependencies.isTownyPresent) {
             TownBlock townBlock = TownyAPI.getInstance().getTownBlock(location);
             if(townBlock != null) return townBlock.isOutpost() ? config.rtpInOutposts : config.rtpInTowns;
         }
-        if(config.isGriefPreventionPresent) {
+        if(config.softDependencies.isGriefPreventionPresent) {
             Claim claim = GriefPrevention.instance.dataStore.getClaimAt(location, false, null);
             if(claim != null) return config.rtpInTowns;
         }
