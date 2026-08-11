@@ -32,8 +32,15 @@ public class InventoryClickListener implements Listener {
         String buttonAction = pdc.get(ItemUtil.buttonAction, PersistentDataType.STRING);
         if(StringUtils.isNumeric(buttonAction)) player.openInventory(main.config().pages.get(Integer.parseInt(buttonAction)).getInventory());
         else {
-            if(TeleportUtil.isOnCooldown(player)) {
-                long remaining = TeleportUtil.getRemainingCooldown(player);
+            RTPWorld rtpWorld = main.config().getWorld(buttonAction);
+            World world = main.getServer().getWorld(rtpWorld == null ? "RTPMenuWorldDoesNotExist" : rtpWorld.worldName);
+            if(rtpWorld == null || world == null) {
+                player.sendMessage(Localization.get(player, "error.teleport", true));
+                main.getLogger().warning(Localization.console("console.world-does-not-exist", buttonAction));
+                return;
+            }
+            if(TeleportUtil.isOnCooldown(player, rtpWorld.worldName)) {
+                long remaining = TeleportUtil.getRemainingCooldown(player, rtpWorld.worldName);
                 long hours = remaining / 3600;
                 long minutes = (remaining % 3600) / 60;
                 long seconds = remaining % 60;
@@ -42,13 +49,6 @@ public class InventoryClickListener implements Listener {
                 else if(minutes > 0 || hours == 1) localizedMessage = Localization.get(player, "error.cooldown.minutes", true, (hours * 60) + minutes, seconds);
                 else localizedMessage = Localization.get(player, "error.cooldown.seconds", true, seconds);
                 player.sendMessage(localizedMessage);
-                return;
-            }
-            RTPWorld rtpWorld = main.config().getWorld(buttonAction);
-            World world = main.getServer().getWorld(rtpWorld == null ? "RTPMenuWorldDoesNotExist" : rtpWorld.worldName);
-            if(rtpWorld == null || world == null) {
-                player.sendMessage(Localization.get(player, "error.teleport", true));
-                main.getLogger().warning(Localization.console("console.world-does-not-exist", buttonAction));
                 return;
             }
             TeleportUtil.startTeleport(player, rtpWorld, world);

@@ -26,26 +26,30 @@ public class TeleportUtil {
     static Main main = Main.getInstance();
     static BukkitScheduler scheduler = main.getServer().getScheduler();
 
+    record CooldownKey(UUID uuid, String worldName) {}
+
     static final Map<UUID, Location> pendingTeleports = new HashMap<>();
     static final Map<UUID, Integer> countdowns = new HashMap<>();
-    static final Map<UUID, Long> cooldowns = new HashMap<>();
+    static final Map<CooldownKey, Long> cooldowns = new HashMap<>();
 
-    public static boolean isOnCooldown(Player player) {
-        Long expiresAt = cooldowns.get(player.getUniqueId());
+    public static boolean isOnCooldown(Player player, String worldName) {
+        CooldownKey key = new CooldownKey(player.getUniqueId(), main.config().perWorldCooldowns ? worldName : "RTPMenu");
+        Long expiresAt = cooldowns.get(key);
         if(expiresAt == null) return false;
         if(System.currentTimeMillis() < expiresAt) return true;
-        cooldowns.remove(player.getUniqueId());
+        cooldowns.remove(key);
         return false;
     }
 
-    public static Long getRemainingCooldown(Player player) {
-        Long expiresAt = cooldowns.get(player.getUniqueId());
+    public static Long getRemainingCooldown(Player player, String worldName) {
+        CooldownKey key = new CooldownKey(player.getUniqueId(), main.config().perWorldCooldowns ? worldName : "RTPMenu");
+        Long expiresAt = cooldowns.get(key);
         if(expiresAt == null) return 0L;
         long remaining = expiresAt - System.currentTimeMillis();
         return remaining / 1000L;
     }
 
-    private static void setCooldown(Player player) {
+    private static void setCooldown(Player player, String worldName) {
         Config config = main.config();
         long cooldown = main.config().rtpCooldown;
         if(config.isLuckPermsPresent) {
@@ -57,7 +61,8 @@ public class TeleportUtil {
                 if(cooldownMeta != null) cooldown = Long.parseLong(cooldownMeta);
             }
         }
-        cooldowns.put(player.getUniqueId(), System.currentTimeMillis() + (cooldown * 1000L));
+        CooldownKey key = new CooldownKey(player.getUniqueId(), config.perWorldCooldowns ? worldName : "RTPMenu");
+        cooldowns.put(key, System.currentTimeMillis() + (cooldown * 1000L));
     }
 
     public static void startTeleport(Player player, RTPWorld rtpWorld, World world) {
@@ -79,16 +84,16 @@ public class TeleportUtil {
             }
             countdowns.remove(uuid);
             Location location = pendingTeleports.remove(uuid);
-            if(location != null && !countdowns.containsKey(uuid)) teleportPlayer(player, location);
+            if(location != null && !countdowns.containsKey(uuid)) teleportPlayer(player, location, rtpWorld.worldName);
             countdownTask.cancel();
         }, 0L, 20L);
     }
 
-    private static void teleportPlayer(Player player, Location location) {
+    private static void teleportPlayer(Player player, Location location, String worldName) {
         player.teleport(location);
         player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1.5f, 2f);
         player.sendMessage(Localization.get(player, "teleport.teleported", true, (int) location.getX(), (int) location.getY(), (int) location.getZ()));
-        setCooldown(player);
+        setCooldown(player, worldName);
         MetricsUtil.rtpCounter.incrementAndGet();
     }
 
