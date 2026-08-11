@@ -1,6 +1,6 @@
 name: RTPMenu
 description: Better, more advanced RTP menu for multiple worlds with a bunch of options
-version: 1.0.1
+version: 1.0.2
 author: Cocolennon
 api-version: 1.21
 main: me.cocolennon.rtpmenu.Main
