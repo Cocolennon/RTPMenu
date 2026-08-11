@@ -32,6 +32,10 @@ repositories {
         name = 'matteodev'
         url = 'https://maven.devs.beer/'
     }
+    maven {
+        name = 'nexomc repo'
+        url = 'https://repo.nexomc.com/releases'
+    }
 }
 
 dependencies {
@@ -40,6 +44,7 @@ dependencies {
     compileOnly 'net.luckperms:api:5.5'
     compileOnly 'com.github.GriefPrevention:GriefPrevention:18.0.0'
     compileOnly 'dev.lone:api-itemsadder:4.0.10'
+    compileOnly 'com.nexomc:nexo:1.26.0'
     implementation 'org.bstats:bstats-bukkit:3.2.1'
 }
 
