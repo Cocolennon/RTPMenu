@@ -6,9 +6,11 @@ import me.cocolennon.rtpmenu.objects.RTPWorld;
 import me.cocolennon.rtpmenu.util.Localization;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 
+import java.io.File;
 import java.util.*;
 
 public final class Config {
@@ -43,7 +45,7 @@ public final class Config {
         this.rtpInGriefPrevention = config.getBoolean("allow-rtp-in-griefprevention");
         this.rtpCooldown = config.getInt("rtp-cooldown");
         this.perWorldCooldowns = config.getBoolean("per-world-cooldowns");
-        this.worlds = loadWorlds(config.getConfigurationSection("worlds"));
+        this.worlds = loadWorlds(plugin);
         this.isLuckPermsPresent = pluginManager.isPluginEnabled("LuckPerms");
         this.isTownyPresent = pluginManager.isPluginEnabled("Towny");
         this.isGriefPreventionPresent = pluginManager.isPluginEnabled("GriefPrevention");
@@ -55,7 +57,8 @@ public final class Config {
         return worlds.stream().filter(world -> world.worldName.equalsIgnoreCase(worldName)).findFirst().orElse(null);
     }
 
-    private List<RTPWorld> loadWorlds(ConfigurationSection configWorlds) {
+    private List<RTPWorld> loadWorlds(Main plugin) {
+        ConfigurationSection configWorlds = loadWorldsConfig(plugin);
         if(configWorlds == null) return List.of();
         List<RTPWorld> worlds = new ArrayList<>();
         for(String worldName : configWorlds.getKeys(false)) {
@@ -69,6 +72,16 @@ public final class Config {
             worlds.add(new RTPWorld(worldName, itemName, displayName, blacklistedBlocksNames, maxX, maxZ));
         }
         return worlds;
+    }
+
+    private ConfigurationSection loadWorldsConfig(Main plugin) {
+        File worldsFile = new File(plugin.getDataFolder(), "worlds.yml");
+        if(!worldsFile.exists()) {
+            plugin.saveResource("worlds.yml", false);
+            worldsFile = new File(plugin.getDataFolder(), "worlds.yml");
+        }
+        YamlConfiguration worldsConfig = YamlConfiguration.loadConfiguration(worldsFile);
+        return worldsConfig.getConfigurationSection("worlds");
     }
 
     private List<RTPInventoryHolder> getPages(Main plugin) {
