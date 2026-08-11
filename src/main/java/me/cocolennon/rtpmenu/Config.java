@@ -57,7 +57,7 @@ public final class Config {
 
     private List<RTPWorld> loadWorlds(ConfigurationSection configWorlds) {
         if(configWorlds == null) return List.of();
-       List<RTPWorld> worlds = new ArrayList<>();
+        List<RTPWorld> worlds = new ArrayList<>();
         for(String worldName : configWorlds.getKeys(false)) {
             ConfigurationSection world = configWorlds.getConfigurationSection(worldName);
             if(world == null) continue;
