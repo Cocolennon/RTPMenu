@@ -1,8 +1,8 @@
 package me.cocolennon.rtpmenu.util;
 
 import com.nexomc.nexo.api.NexoItems;
-import com.nexomc.nexo.items.ItemBuilder;
 import dev.lone.itemsadder.api.CustomStack;
+import io.th0rgal.oraxen.api.OraxenItems;
 import me.cocolennon.rtpmenu.Main;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
 import me.cocolennon.rtpmenu.objects.SoftDependencies;
@@ -59,7 +59,14 @@ public class ItemUtil {
             }
             return customStack.getItemStack();
         }else if(itemName.startsWith("nexo-") && softDependencies.isNexoPresent) {
-            ItemBuilder itemBuilder = NexoItems.itemFromId(itemName.replace("nexo-", ""));
+            com.nexomc.nexo.items.ItemBuilder itemBuilder = NexoItems.itemFromId(itemName.replace("nexo-", ""));
+            if (itemBuilder == null) {
+                main.getLogger().warning(Localization.console("item-does-not-exist", itemName));
+                return new ItemStack(Material.BARRIER);
+            }
+            return itemBuilder.build();
+        }else if(itemName.startsWith("oraxen") && softDependencies.isOraxenPresent) {
+            io.th0rgal.oraxen.items.ItemBuilder itemBuilder = OraxenItems.getItemById(itemName.replace("oraxen-", ""));
             if(itemBuilder == null) {
                 main.getLogger().warning(Localization.console("item-does-not-exist", itemName));
                 return new ItemStack(Material.BARRIER);
