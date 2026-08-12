@@ -19,8 +19,9 @@ public final class Config {
     private final FileConfiguration config;
     private final YamlConfiguration worldsConfig;
 
-    public final String menuTitle;
     public final String defaultLocale;
+    public final boolean autoUpdaterEnabled;
+    public final String menuTitle;
     public final String previousPageItem;
     public final String nextPageItem;
     public final boolean rtpInTowns;
@@ -39,6 +40,7 @@ public final class Config {
         PluginManager pluginManager = plugin.getServer().getPluginManager();
         this.defaultLocale = config.getString("default-locale");
         Localization.init(plugin, defaultLocale);
+        this.autoUpdaterEnabled = config.getBoolean("auto-updater-enabled");
         this.menuTitle = config.getString("menu-title");
         this.previousPageItem = config.getString("previous-page-item");
         this.nextPageItem = config.getString("next-page-item");

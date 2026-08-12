@@ -1,6 +1,9 @@
 # This will be used for errors in the console and as a fallback when a user's language isn't on the server.
 default-locale: "en-US"
 
+# Downloads updates from Modrinth automatically
+auto-updater-enabled: true
+
 # The RTP menu's title.
 # You can change the menu's texture with it and ItemsAdder or Nexo (read their respective wikis if you don't know how)
 menu-title: "<#45CC4B>RTP Menu"
