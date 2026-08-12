@@ -36,6 +36,10 @@ repositories {
         name = 'nexomc repo'
         url = 'https://repo.nexomc.com/releases'
     }
+    maven {
+        name = 'oraxen repo'
+        url = 'https://repo.oraxen.com/releases'
+    }
 }
 
 dependencies {
@@ -45,6 +49,7 @@ dependencies {
     compileOnly 'com.github.GriefPrevention:GriefPrevention:18.0.0'
     compileOnly 'dev.lone:api-itemsadder:4.0.10'
     compileOnly 'com.nexomc:nexo:1.26.0'
+    compileOnly 'io.th0rgal:oraxen:1.218.0'
     implementation 'org.bstats:bstats-bukkit:3.2.1'
 }
 

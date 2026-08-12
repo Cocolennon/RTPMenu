@@ -8,6 +8,7 @@ public final class SoftDependencies {
     public final boolean isGriefPreventionPresent;
     public final boolean isItemsAdderPresent;
     public final boolean isNexoPresent;
+    public final boolean isOraxenPresent;
 
     public SoftDependencies(PluginManager pluginManager) {
         this.isLuckPermsPresent = pluginManager.isPluginEnabled("LuckPerms");
@@ -15,5 +16,6 @@ public final class SoftDependencies {
         this.isGriefPreventionPresent = pluginManager.isPluginEnabled("GriefPrevention");
         this.isItemsAdderPresent = pluginManager.isPluginEnabled("ItemsAdder");
         this.isNexoPresent = pluginManager.isPluginEnabled("Nexo");
+        this.isOraxenPresent = pluginManager.isPluginEnabled("Oraxen");
     }
 }
