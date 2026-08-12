@@ -1,10 +1,13 @@
 # This will be used for errors in the console and as a fallback when a user's language isn't on the server.
 default-locale: "en-US"
 
-# The RTP menu's title. You can change the menu's texture with it and ItemsAdder
+# The RTP menu's title.
+# You can change the menu's texture with it and ItemsAdder or Nexo (read their respective wikis if you don't know how)
 menu-title: "<#45CC4B>RTP Menu"
 
-# Previous and next page items. Doesn't matter if you have 3 or fewer worlds. You can use ItemsAdder items by changing this to itemsadder-namespace:itemname (example: itemsadder-customitems:coolstick)
+# Previous and next page items. Doesn't matter if you have 3 or fewer worlds.
+# You can use ItemsAdder items by changing this to itemsadder-namespace:itemname (example: itemsadder-customitems:coolstick)
+# Or you can use Nexo items by changing this to nexo-itemname (example: nexo-coolstick)
 previous-page-item: arrow
 next-page-item: arrow
 
