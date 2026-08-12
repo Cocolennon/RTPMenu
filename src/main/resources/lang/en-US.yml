@@ -11,6 +11,7 @@ error:
     minutes: "<#FF4545>You must wait %s minutes %s seconds before teleporting again."
     seconds: "<#FF4545>You must wait %s seconds before teleporting again."
 reload: "<#26F525>Configuration reloaded!"
+new-version: "<#26F525>An update is available on Modrinth!"
 menu:
   previous-page: "<#45CC4B>Previous Page"
   next-page: "<#45CC4B>Next Page"

@@ -11,6 +11,7 @@ error:
     minutes: "<#FF4545>Vous devez attendre %s minutes %s secondes avant de vous téleporter à nouveau."
     seconds: "<#FF4545>Vous devez attendre %s secondes avant de vous téleporter à nouveau."
 reload: "<#26F525>Configuration rechargée !"
+new-version: "<#26F525>Une mise à jour est disponible sur Modrinth !"
 menu:
   previous-page: "<#45CC4B>Page précédente"
   next-page: "<#45CC4B>Page suivante"

@@ -13,11 +13,13 @@ public class ReloadCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if(!(sender instanceof Player player)) return false;
         if(!player.hasPermission("rtpmenu.reload")) {
-            sender.sendMessage(Localization.get(player, "error.permission", true));
+            player.sendMessage(Localization.get(player, "error.permission", true));
             return false;
         }
-        Main.getInstance().loadConfig(true);
-        sender.sendMessage(Localization.get(player, "reload", true));
+        Main main = Main.getInstance();
+        main.loadConfig(true);
+        player.sendMessage(Localization.get(player, "reload", true));
+        if(main.getUsingOldVersion()) player.sendMessage(Localization.get(player, "new-version", true));
         return true;
     }
 }
