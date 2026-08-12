@@ -114,12 +114,12 @@ public final class Config {
             }
             int menuSlot = slotsToAssign == 1 ? 13 : 11;
             for(RTPWorld world : worldsInPage) {
-                ItemStack worldItem = ItemUtil.getWorldItem(world);
+                ItemStack worldItem = ItemUtil.getWorldItem(world, softDependencies);
                 newPage.setItem(menuSlot, worldItem);
                 menuSlot += slotsToAssign == 2 ? 4 : 2;
             }
-            if(pageNumber < pagesCount && this.worlds.size() > 3) newPage.setItem(23, ItemUtil.getNextPageItem(defaultLocale, pageNumber + 1, this.nextPageItem));
-            if(pageNumber > 0) newPage.setItem(21, ItemUtil.getPreviousPageItem(defaultLocale, pageNumber - 1, this.previousPageItem));
+            if(pageNumber < pagesCount && this.worlds.size() > 3) newPage.setItem(23, ItemUtil.getNextPageItem(defaultLocale, pageNumber + 1, this.nextPageItem, softDependencies));
+            if(pageNumber > 0) newPage.setItem(21, ItemUtil.getPreviousPageItem(defaultLocale, pageNumber - 1, this.previousPageItem, softDependencies));
             pages.add(newPage);
         }
         return pages;

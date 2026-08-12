@@ -1,8 +1,11 @@
 package me.cocolennon.rtpmenu.util;
 
+import com.nexomc.nexo.api.NexoItems;
+import com.nexomc.nexo.items.ItemBuilder;
 import dev.lone.itemsadder.api.CustomStack;
 import me.cocolennon.rtpmenu.Main;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
+import me.cocolennon.rtpmenu.objects.SoftDependencies;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
@@ -17,8 +20,8 @@ public class ItemUtil {
     private static final MiniMessage miniMessage = MiniMessage.miniMessage();
     public static NamespacedKey buttonAction = new NamespacedKey("rtpmenu", "button_action");
 
-    public static ItemStack getWorldItem(RTPWorld world) {
-        ItemStack itemStack = getBaseStack(world.itemName);
+    public static ItemStack getWorldItem(RTPWorld world, SoftDependencies softDependencies) {
+        ItemStack itemStack = getBaseStack(world.itemName, softDependencies);
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();
         pdc.set(buttonAction, PersistentDataType.STRING, world.worldName);
@@ -27,8 +30,8 @@ public class ItemUtil {
         return itemStack;
     }
 
-    public static ItemStack getPreviousPageItem(String locale, int pageNumber, String itemName) {
-        ItemStack itemStack = getBaseStack(itemName);
+    public static ItemStack getPreviousPageItem(String locale, int pageNumber, String itemName, SoftDependencies softDependencies) {
+        ItemStack itemStack = getBaseStack(itemName, softDependencies);
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();
         pdc.set(buttonAction, PersistentDataType.STRING, String.valueOf(pageNumber));
@@ -37,8 +40,8 @@ public class ItemUtil {
         return itemStack;
     }
 
-    public static ItemStack getNextPageItem(String locale, int pageNumber, String itemName) {
-        ItemStack itemStack = getBaseStack(itemName);
+    public static ItemStack getNextPageItem(String locale, int pageNumber, String itemName, SoftDependencies softDependencies) {
+        ItemStack itemStack = getBaseStack(itemName, softDependencies);
         ItemMeta itemMeta = itemStack.getItemMeta();
         PersistentDataContainer pdc = itemMeta.getPersistentDataContainer();
         pdc.set(buttonAction, PersistentDataType.STRING, String.valueOf(pageNumber));
@@ -47,14 +50,21 @@ public class ItemUtil {
         return itemStack;
     }
 
-    private static ItemStack getBaseStack(String itemName) {
-        if(itemName.startsWith("itemsadder-")) {
+    private static ItemStack getBaseStack(String itemName, SoftDependencies softDependencies) {
+        if(itemName.startsWith("itemsadder-") && softDependencies.isItemsAdderPresent) {
             CustomStack customStack = CustomStack.getInstance(itemName.replace("itemsadder-", ""));
-            if(customStack == null) {
+            if (customStack == null) {
                 main.getLogger().warning(Localization.console("item-does-not-exist", itemName));
                 return new ItemStack(Material.BARRIER);
             }
             return customStack.getItemStack();
+        }else if(itemName.startsWith("nexo-") && softDependencies.isNexoPresent) {
+            ItemBuilder itemBuilder = NexoItems.itemFromId(itemName.replace("nexo-", ""));
+            if(itemBuilder == null) {
+                main.getLogger().warning(Localization.console("item-does-not-exist", itemName));
+                return new ItemStack(Material.BARRIER);
+            }
+            return itemBuilder.build();
         }else{
             Material material = Material.matchMaterial(itemName);
             if(material == null) {
