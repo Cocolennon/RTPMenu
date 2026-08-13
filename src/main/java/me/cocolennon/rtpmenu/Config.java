@@ -58,12 +58,8 @@ public final class Config {
         this.pages = getPages();
     }
 
-    public RTPWorld getWorldFromId(String worldName) {
+    public RTPWorld getWorld(String worldName) {
         return worlds.stream().filter(world -> world.worldName.equalsIgnoreCase(worldName)).findFirst().orElse(null);
-    }
-
-    public RTPWorld getWorldFromName(String worldName) {
-        return worlds.stream().filter(world -> world.displayName.equalsIgnoreCase(worldName)).findFirst().orElse(null);
     }
 
     private YamlConfiguration loadWorldsConfig() {
@@ -113,7 +109,6 @@ public final class Config {
         int worldCount = 0;
         int slotsToAssign = 3;
         int pagesCount = (this.worlds.size() - 1) / 3;
-
         for(int pageNumber = 0; pageNumber <= pagesCount; pageNumber++){
             RTPInventoryHolder newPage = new RTPInventoryHolder(plugin, this.menuTitle);
             List<RTPWorld> worldsInPage = new ArrayList<>();

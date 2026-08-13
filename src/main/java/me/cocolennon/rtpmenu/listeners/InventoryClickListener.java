@@ -32,7 +32,7 @@ public class InventoryClickListener implements Listener {
         Config config = main.config();
         if(StringUtils.isNumeric(buttonAction)) player.openInventory(config.pages.get(Integer.parseInt(buttonAction)).getInventory());
         else {
-            RTPWorld rtpWorld = config.getWorldFromId(buttonAction);
+            RTPWorld rtpWorld = config.getWorld(buttonAction);
             World world = main.getServer().getWorld(rtpWorld == null ? "RTPMenuWorldDoesNotExist" : rtpWorld.worldName);
             if(rtpWorld == null || world == null) {
                 player.sendMessage(Localization.get(player, "error.teleport", true));

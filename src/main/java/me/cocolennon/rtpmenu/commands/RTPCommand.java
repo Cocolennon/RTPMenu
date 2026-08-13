@@ -37,7 +37,7 @@ public class RTPCommand {
                 .then(Commands.literal("reload")
                         .requires(source -> source.getSender().hasPermission("rtpmenu.reload"))
                         .executes(RTPCommand::reload))
-                .then(Commands.argument("world", StringArgumentType.greedyString())
+                .then(Commands.argument("world", StringArgumentType.string())
                         .requires(source -> source.getSender().hasPermission("rtpmenu.teleport") && source.getSender() instanceof Player)
                         .suggests(RTPCommand::worldSuggestions)
                         .executes(RTPCommand::teleport))
@@ -83,7 +83,7 @@ public class RTPCommand {
         Config config = Main.getInstance().config();
         for(RTPWorld rtpWorld : config.worlds) {
             if(!sender.hasPermission("rtpmenu.world." + rtpWorld.worldName)) continue;
-            builder.suggest(rtpWorld.displayName);
+            builder.suggest(rtpWorld.worldName);
         }
         return builder.buildFuture();
     }
@@ -93,7 +93,7 @@ public class RTPCommand {
         Main main = Main.getInstance();
         Config config = main.config();
         String worldName = context.getArgument("world", String.class);
-        RTPWorld rtpWorld = config.getWorldFromName(worldName);
+        RTPWorld rtpWorld = config.getWorld(worldName);
         World world = main.getServer().getWorld(rtpWorld == null ? "RTPMenuWorldDoesNotExist" : rtpWorld.worldName);
         if(rtpWorld == null || world == null) {
             player.sendMessage(Localization.get(player, "error.teleport", true));
