@@ -7,6 +7,7 @@ import me.cocolennon.rtpmenu.Main;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.group.Group;
@@ -63,6 +64,22 @@ public class TeleportUtil {
         }
         CooldownKey key = new CooldownKey(player.getUniqueId(), config.perWorldCooldowns ? worldName : "RTPMenu");
         cooldowns.put(key, System.currentTimeMillis() + (cooldown * 1000L));
+    }
+
+    public static boolean checkCooldown(Player player, RTPWorld rtpWorld) {
+        if(TeleportUtil.isOnCooldown(player, rtpWorld.worldName)) {
+            long remaining = TeleportUtil.getRemainingCooldown(player, rtpWorld.worldName);
+            long hours = remaining / 3600;
+            long minutes = (remaining % 3600) / 60;
+            long seconds = remaining % 60;
+            Component localizedMessage;
+            if(hours > 1 || (hours == 1 && (minutes > 0))) localizedMessage = Localization.get(player, "error.cooldown.hours", true, hours, minutes);
+            else if(minutes > 0 || hours == 1) localizedMessage = Localization.get(player, "error.cooldown.minutes", true, (hours * 60) + minutes, seconds);
+            else localizedMessage = Localization.get(player, "error.cooldown.seconds", true, seconds);
+            player.sendMessage(localizedMessage);
+            return true;
+        }
+        return false;
     }
 
     public static void startTeleport(Player player, RTPWorld rtpWorld, World world) {

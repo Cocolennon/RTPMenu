@@ -44,18 +44,7 @@ public class InventoryClickListener implements Listener {
                 player.sendMessage(Localization.get(player, "error.world-permission", true, rtpWorld.displayName));
                 return;
             }
-            if(TeleportUtil.isOnCooldown(player, rtpWorld.worldName)) {
-                long remaining = TeleportUtil.getRemainingCooldown(player, rtpWorld.worldName);
-                long hours = remaining / 3600;
-                long minutes = (remaining % 3600) / 60;
-                long seconds = remaining % 60;
-                Component localizedMessage;
-                if(hours > 1 || (hours == 1 && (minutes > 0))) localizedMessage = Localization.get(player, "error.cooldown.hours", true, hours, minutes);
-                else if(minutes > 0 || hours == 1) localizedMessage = Localization.get(player, "error.cooldown.minutes", true, (hours * 60) + minutes, seconds);
-                else localizedMessage = Localization.get(player, "error.cooldown.seconds", true, seconds);
-                player.sendMessage(localizedMessage);
-                return;
-            }
+            if(TeleportUtil.checkCooldown(player, rtpWorld)) return;
             TeleportUtil.startTeleport(player, rtpWorld, world);
             player.closeInventory();
         }
