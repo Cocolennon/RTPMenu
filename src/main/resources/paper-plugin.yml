@@ -1,0 +1,40 @@
+name: RTPMenu
+description: Better, more advanced RTP menu for multiple worlds with a bunch of options
+version: 1.0.3
+author: Cocolennon
+api-version: '1.21'
+main: me.cocolennon.rtpmenu.Main
+folia-supported: true
+dependencies:
+  server:
+    LuckPerms:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    Towny:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    GriefPrevention:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    ItemsAdder:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    Nexo:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    Oraxen:
+      load: BEFORE
+      required: false
+      join-classpath: true
+permissions:
+  rtpmenu.info:
+    description: Allows user to see the plugin's info
+  rtpmenu.teleport:
+    description: Allows opening the menu
+  rtpmenu.reload:
+    description: Allows reloading the configuration

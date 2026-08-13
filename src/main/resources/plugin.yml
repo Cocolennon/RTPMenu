@@ -4,12 +4,8 @@ version: 1.0.3
 author: Cocolennon
 api-version: 1.21
 main: me.cocolennon.rtpmenu.Main
+folia-supported: true
 softdepend: [LuckPerms, Towny, GriefPrevention, ItemsAdder, Nexo, Oraxen]
-commands:
-  rtp:
-    description: Open the RTP menu
-  rtpreload:
-    description: Reloads the configuration
 permissions:
   rtpmenu.info:
     description: Allows user to see the plugin's info
