@@ -39,19 +39,15 @@ public final class Localization {
         InputStream stream = main.getResource("lang/" + fileName);
         YamlConfiguration currentLocale =  YamlConfiguration.loadConfiguration(new InputStreamReader(stream));
         YamlConfiguration oldLocale = YamlConfiguration.loadConfiguration(file);
-        boolean changed = false;
-        for(String key : currentLocale.getKeys(true)) {
-            if(!oldLocale.contains(key)) {
+        try {
+            boolean changed = false;
+            for(String key : currentLocale.getKeys(true)) if(!oldLocale.contains(key)) {
                 oldLocale.set(key, currentLocale.getString(key));
                 changed = true;
             }
-        }
-        if(changed) {
-            try {
-                oldLocale.save(file);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
+            if(changed) oldLocale.save(file);
+        }catch(Exception error) {
+            error.printStackTrace();
         }
     }
 
@@ -59,7 +55,6 @@ public final class Localization {
         locales.clear();
         File[] files = folder.listFiles();
         if(files == null) return;
-
         for(File file : files) {
             if(!file.getName().endsWith(".yml")) continue;
             String locale = file.getName().replace(".yml", "");
