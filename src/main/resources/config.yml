@@ -26,6 +26,7 @@ allow-rtp-in-griefprevention: false
 enforce-world-permissions: false
 
 # Cooldown between RTP usages. (Default: 10 seconds)
+# LuckPerms groups can have different cooldowns. You can do this by adding a "rtpmenu.cooldown" and assigning it a value (in seconds).
 rtp-cooldown: 10
 # Allows having separate cooldowns for every world. (Default: true)
 per-world-cooldowns: true
