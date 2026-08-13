@@ -3,6 +3,7 @@ package me.cocolennon.rtpmenu;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.cocolennon.rtpmenu.commands.RTPCommand;
 import me.cocolennon.rtpmenu.listeners.InventoryClickListener;
+import me.cocolennon.rtpmenu.listeners.PlayerJoinListener;
 import me.cocolennon.rtpmenu.util.MetricsUtil;
 import me.cocolennon.rtpmenu.util.Updater;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -41,6 +42,7 @@ public class Main extends JavaPlugin {
 
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), instance);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), instance);
     }
 
     private void checkVersion() {
