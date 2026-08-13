@@ -5,7 +5,7 @@
 prefix: "<#75FF7A>[<#45CC4B>RTP Menu<#75FF7A>]"
 error:
   permission: "<#FF4545>You aren't allowed to do this!"
-  world-permission: "<#FF4545>You aren't allowed to teleport to %s"
+  world-permission: "<#FF4545>You aren't allowed to teleport to %s."
   teleport: "<#FF4545>Something went wrong when teleporting to this world."
   cooldown:
     hours: "<#FF4545>You must wait %s hours %s minutes before teleporting again."
