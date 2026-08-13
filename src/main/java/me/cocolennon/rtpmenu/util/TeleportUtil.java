@@ -85,8 +85,9 @@ public class TeleportUtil {
     public static void startTeleport(Player player, RTPWorld rtpWorld, World world) {
         UUID uuid = player.getUniqueId();
         generateRandomCoordinates(rtpWorld, world, location -> pendingTeleports.put(uuid, location));
-        countdowns.put(uuid, 3);
-        final AtomicInteger seconds = new AtomicInteger(3);
+        int countdownLength = Main.getInstance().config().rtpCountdown;
+        countdowns.put(uuid, countdownLength);
+        final AtomicInteger seconds = new AtomicInteger(countdownLength);
         scheduler.runTaskTimer(main, countdownTask -> {
             if(!player.isOnline()) {
                 pendingTeleports.remove(uuid);
