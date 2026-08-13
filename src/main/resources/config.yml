@@ -22,7 +22,7 @@ allow-rtp-in-outposts: false
 allow-rtp-in-griefprevention: false
 
 # Enforces custom permissions to teleport to worlds. (Default: false)
-# In order to grant a world's permission, set the permission rtpmenu.world.worldname to true. (Replace "worldname" with the world's name as in the worlds.yml file)
+# In order to grant a world's permission, set the permission rtpmenu.world.worldname to true. (Replace "worldname" with the world's name [not the display name] as in the worlds.yml file)
 enforce-world-permissions: false
 
 # Cooldown between RTP usages. (Default: 10 seconds)
