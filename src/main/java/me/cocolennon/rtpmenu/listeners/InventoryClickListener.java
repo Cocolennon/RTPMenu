@@ -1,5 +1,6 @@
 package me.cocolennon.rtpmenu.listeners;
 
+import me.cocolennon.rtpmenu.Config;
 import me.cocolennon.rtpmenu.Main;
 import me.cocolennon.rtpmenu.util.ItemUtil;
 import me.cocolennon.rtpmenu.objects.RTPInventoryHolder;
@@ -18,8 +19,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 public class InventoryClickListener implements Listener {
-    final Main main = Main.getInstance();
-
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if(!(event.getInventory().getHolder() instanceof RTPInventoryHolder)) return;
@@ -30,13 +29,19 @@ public class InventoryClickListener implements Listener {
         PersistentDataContainer pdc = clicked.getItemMeta().getPersistentDataContainer();
         if(!pdc.has(ItemUtil.buttonAction)) return;
         String buttonAction = pdc.get(ItemUtil.buttonAction, PersistentDataType.STRING);
-        if(StringUtils.isNumeric(buttonAction)) player.openInventory(main.config().pages.get(Integer.parseInt(buttonAction)).getInventory());
+        Main main = Main.getInstance();
+        Config config = main.config();
+        if(StringUtils.isNumeric(buttonAction)) player.openInventory(config.pages.get(Integer.parseInt(buttonAction)).getInventory());
         else {
-            RTPWorld rtpWorld = main.config().getWorld(buttonAction);
+            RTPWorld rtpWorld = config.getWorld(buttonAction);
             World world = main.getServer().getWorld(rtpWorld == null ? "RTPMenuWorldDoesNotExist" : rtpWorld.worldName);
             if(rtpWorld == null || world == null) {
                 player.sendMessage(Localization.get(player, "error.teleport", true));
                 main.getLogger().warning(Localization.console("console.world-does-not-exist", buttonAction));
+                return;
+            }
+            if(config.enforceWorldPermissions && !player.hasPermission("rtpmenu.world." + rtpWorld.worldName)) {
+                player.sendMessage(Localization.get(player, "error.world-permission", true, rtpWorld.displayName));
                 return;
             }
             if(TeleportUtil.isOnCooldown(player, rtpWorld.worldName)) {
