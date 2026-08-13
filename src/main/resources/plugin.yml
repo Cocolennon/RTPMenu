@@ -11,6 +11,8 @@ commands:
   rtpreload:
     description: Reloads the configuration
 permissions:
+  rtpmenu.info:
+    description: Allows user to see the plugin's info
   rtpmenu.teleport:
     description: Allows opening the menu
   rtpmenu.reload:
