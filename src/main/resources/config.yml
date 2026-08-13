@@ -1,31 +1,31 @@
-# This will be used for errors in the console and as a fallback when a user's language isn't on the server.
+# This will be used for errors in the console and as a fallback when a user's language isn't on the server. (Default: en-US)
 default-locale: "en-US"
 
-# Downloads updates from Modrinth automatically
+# Downloads updates from Modrinth automatically (Default: true)
 auto-updater-enabled: true
 
-# The RTP menu's title.
+# The RTP menu's title. (Default: "<#45CC4B>RTP Menu")
 # You can change the menu's texture with it and ItemsAdder or Nexo (read their respective wikis if you don't know how)
 menu-title: "<#45CC4B>RTP Menu"
 
-# Previous and next page items. Doesn't matter if you have 3 or fewer worlds.
+# Previous and next page items. Doesn't matter if you have 3 or fewer worlds. (Default: arrow)
 # You can use ItemsAdder items by changing this to itemsadder-namespace:itemname (example: itemsadder-customitems:coolstick)
 # Or you can use Nexo items by changing this to nexo-itemname (example: nexo-coolstick)
 previous-page-item: arrow
 next-page-item: arrow
 
-# Allows or denies teleporting inside towns or outposts, works only with Towny
+# Allows or denies teleporting inside towns or outposts, works only with Towny (Default: false)
 allow-rtp-in-towns: false
 allow-rtp-in-outposts: false
 
-# Allows or denies teleporting inside areas protected by GriefPrevention
+# Allows or denies teleporting inside areas protected by GriefPrevention (Default: false)
 allow-rtp-in-griefprevention: false
 
-# Enforces custom permissions to teleport to worlds.
+# Enforces custom permissions to teleport to worlds. (Default: false)
 # In order to grant a world's permission, set the permission rtpmenu.world.worldname to true. (Replace "worldname" with the world's name as in the worlds.yml file)
 enforce-world-permissions: false
 
-# Cooldown between RTP usages. Default is 10 seconds.
+# Cooldown between RTP usages. (Default: 10 seconds)
 rtp-cooldown: 10
-# Allows having separate cooldowns for every world.
+# Allows having separate cooldowns for every world. (Default: true)
 per-world-cooldowns: true
