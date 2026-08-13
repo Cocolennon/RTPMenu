@@ -30,3 +30,6 @@ enforce-world-permissions: false
 rtp-cooldown: 10
 # Allows having separate cooldowns for every world. (Default: true)
 per-world-cooldowns: true
+
+# Countdown before a player is teleported (Default: 3, can't be less than 3 seconds)
+rtp-countdown: 3

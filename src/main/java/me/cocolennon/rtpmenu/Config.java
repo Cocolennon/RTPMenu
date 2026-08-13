@@ -30,6 +30,7 @@ public final class Config {
     public final boolean enforceWorldPermissions;
     public final int rtpCooldown;
     public final boolean perWorldCooldowns;
+    public final int rtpCountdown;
     public final List<RTPWorld> worlds;
     public final SoftDependencies softDependencies;
     public final List<RTPInventoryHolder> pages;
@@ -51,6 +52,7 @@ public final class Config {
         this.enforceWorldPermissions = config.getBoolean("enforce-world-permissions");
         this.rtpCooldown = config.getInt("rtp-cooldown");
         this.perWorldCooldowns = config.getBoolean("per-world-cooldowns");
+        this.rtpCountdown = Math.max(config.getInt("rtp-countdown"), 3);
         this.worlds = loadWorlds();
         this.softDependencies = new SoftDependencies(pluginManager);
         this.pages = getPages();
