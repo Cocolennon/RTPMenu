@@ -1,7 +1,7 @@
 package me.cocolennon.rtpmenu;
 
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.cocolennon.rtpmenu.commands.RTPCommand;
-import me.cocolennon.rtpmenu.commands.ReloadCommand;
 import me.cocolennon.rtpmenu.listeners.InventoryClickListener;
 import me.cocolennon.rtpmenu.util.MetricsUtil;
 import me.cocolennon.rtpmenu.util.Updater;
@@ -34,8 +34,9 @@ public class Main extends JavaPlugin {
     }
 
     private void registerCommands() {
-        getCommand("rtp").setExecutor(new RTPCommand());
-        getCommand("rtpreload").setExecutor(new ReloadCommand());
+        getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
+            commands.registrar().register(RTPCommand.register());
+        });
     }
 
     private void registerListeners() {
