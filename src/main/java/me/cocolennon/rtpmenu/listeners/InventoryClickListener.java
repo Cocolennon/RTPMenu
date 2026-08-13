@@ -37,10 +37,12 @@ public class InventoryClickListener implements Listener {
             if(rtpWorld == null || world == null) {
                 player.sendMessage(Localization.get(player, "error.teleport", true));
                 main.getLogger().warning(Localization.console("console.world-does-not-exist", buttonAction));
+                player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
                 return;
             }
             if(config.enforceWorldPermissions && !player.hasPermission("rtpmenu.world." + rtpWorld.worldName)) {
                 player.sendMessage(Localization.get(player, "error.world-permission", true, rtpWorld.displayName));
+                player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
                 return;
             }
             if(TeleportUtil.checkCooldown(player, rtpWorld)) return;
