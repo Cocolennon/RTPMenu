@@ -27,6 +27,7 @@ public final class Config {
     public final boolean rtpInTowns;
     public final boolean rtpInOutposts;
     public final boolean rtpInGriefPrevention;
+    public final boolean enforceWorldPermissions;
     public final int rtpCooldown;
     public final boolean perWorldCooldowns;
     public final List<RTPWorld> worlds;
@@ -47,6 +48,7 @@ public final class Config {
         this.rtpInTowns = config.getBoolean("allow-rtp-in-towns");
         this.rtpInOutposts = config.getBoolean("allow-rtp-in-outposts");
         this.rtpInGriefPrevention = config.getBoolean("allow-rtp-in-griefprevention");
+        this.enforceWorldPermissions = config.getBoolean("enforce-world-permissions");
         this.rtpCooldown = config.getInt("rtp-cooldown");
         this.perWorldCooldowns = config.getBoolean("per-world-cooldowns");
         this.worlds = loadWorlds();
