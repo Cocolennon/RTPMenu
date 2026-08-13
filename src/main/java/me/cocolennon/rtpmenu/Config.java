@@ -56,8 +56,12 @@ public final class Config {
         this.pages = getPages();
     }
 
-    public RTPWorld getWorld(String worldName) {
+    public RTPWorld getWorldFromId(String worldName) {
         return worlds.stream().filter(world -> world.worldName.equalsIgnoreCase(worldName)).findFirst().orElse(null);
+    }
+
+    public RTPWorld getWorldFromName(String worldName) {
+        return worlds.stream().filter(world -> world.displayName.equalsIgnoreCase(worldName)).findFirst().orElse(null);
     }
 
     private YamlConfiguration loadWorldsConfig() {
