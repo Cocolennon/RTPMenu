@@ -110,7 +110,7 @@ public final class Config {
         List<RTPInventoryHolder> pages = new ArrayList<>();
         int worldCount = 0;
         int slotsToAssign = 3;
-        int pagesCount = this.worlds.size() / 3;
+        int pagesCount = (this.worlds.size() - 1) / 3;
 
         for(int pageNumber = 0; pageNumber <= pagesCount; pageNumber++){
             RTPInventoryHolder newPage = new RTPInventoryHolder(plugin, this.menuTitle);
