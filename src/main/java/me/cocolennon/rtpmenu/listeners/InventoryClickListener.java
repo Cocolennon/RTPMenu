@@ -7,7 +7,6 @@ import me.cocolennon.rtpmenu.objects.RTPInventoryHolder;
 import me.cocolennon.rtpmenu.objects.RTPWorld;
 import me.cocolennon.rtpmenu.util.Localization;
 import me.cocolennon.rtpmenu.util.TeleportUtil;
-import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
